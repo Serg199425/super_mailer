@@ -1,0 +1,15 @@
+.row
+  .col-lg-4
+  .col-lg-4{:style => "margin-top: 50px"}
+    %h1 Add Proviver Account
+    .providers-errors
+    = simple_form_for @provider_account, url: provider_create_path, remote: false do |f|
+      = f.input :name
+      = f.input :address
+      = f.input :protocol
+      = f.input :port
+      = f.input :enable_ssl, inline_label: 'Enable SSL'
+
+      = f.input :login
+      = f.input :password
+      = f.submit

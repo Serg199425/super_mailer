@@ -1,0 +1,14 @@
+%h1 Your email accounts
+%table.table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+  %tbody
+    - @providers_accounts.each do |provider_account|
+      %tr
+        %td= provider_account.name
+        %td= provider_account.address
+        %td= link_to 'Edit', provider_edit_path(provider_account)
+  

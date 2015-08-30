@@ -1,13 +1,10 @@
 class ProviderAccount < ActiveRecord::Base
   require 'bcrypt'
+  extend Enumerize
 
-  belongs_to :provider
   belongs_to :user
 
-  # before_save :hash_password
+  validates :login, :password, :name, :address, :protocol, :port, presence: true
 
-  # private
-  # def hash_password
-  #   self.password = BCrypt::Password.create(self.password) if self.password_changed?
-  # end
+  enumerize :protocol, in: [:pop3, :imap]
 end

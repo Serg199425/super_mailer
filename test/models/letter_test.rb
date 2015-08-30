@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ProviderTest < ActiveSupport::TestCase
+class LetterTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

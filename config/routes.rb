@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
   root 'letters#index'
+
+  get 'providers/index', to: 'providers#index', as: :providers_index
+  get 'providers/create', to: 'providers#create', as: :provider_create
+  post 'providers/create', to: 'providers#create'
+  get 'providers/edit/:id', to: 'providers#edit', as: :provider_edit
+  patch 'providers/edit/:id', to: 'providers#edit'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

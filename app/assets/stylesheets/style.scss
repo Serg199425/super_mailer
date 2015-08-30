@@ -1,0 +1,17 @@
+.centered { text-align: center; }
+
+.clock-container { font-size: 34px; color: #3071a9; font-weight: bold; }
+
+.left { float: left;}
+
+.devise-container { border: 1px solid rgba(0,0,0,.2); padding: 15px; border-radius: 8px; border-color: #ddd; background-color: #fdfdfd; }
+
+.devise-container label:not([for=user_remember_me]) { display: none; }
+
+.devise-container input[type=password], .devise-container input[type=email] { margin: 5% 10% 0 10%; width: 80%; }
+
+.devise-container input[type=submit] { margin-left: 69%; margin-bottom: 20px; }
+
+body.devise { margin-top: 200px; }
+
+.devise-container .remember-me { margin: 10px 0 0px 58%;}

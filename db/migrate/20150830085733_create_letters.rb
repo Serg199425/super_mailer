@@ -1,10 +1,12 @@
 class CreateLetters < ActiveRecord::Migration
   def change
     create_table :letters do |t|
-      t.string :title
-      t.string :body
-      t.datetime :sended_at
-      t.text :recipients, array: true, default: []
+      t.string :subject
+      t.text :body
+      t.text :parts, array: true, default: []
+      t.datetime :date
+      t.text :from, array: true, default: []
+      t.text :to, array: true, default: []
       t.timestamps null: false
 
       t.belongs_to :user

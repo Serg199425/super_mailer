@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %title SuperMailer
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    #wrapper
+      %nav.navbar-default.navbar-static-side{:role => "navigation"}
+        .sidebar-collapse
+          %ul#side-menu.nav
+            %li.nav-header
+              .dropdown.profile-element
+                %span.main-logo
+                  SMailer
+            %li{ class: is_active?("index") }
+              = link_to letters_index_path do
+                %i.fa.fa-envelope
+                %span.nav-label Inbox
+            %li
+              %a#shared_notes_button{:href => ""}
+                %i.fa.fa-globe
+                %span.nav-label Sent
+            %li
+              %a{:href => ""}
+                %i.fa.fa-star
+                %span.nav-label Spam
+            %li
+              %a#groups_button{:href => ""}
+                %i.fa.fa-th-large
+                %span.nav-label Trash
+            %li
+              %a#friends_button{:href => ""}
+                %i.fa.fa-sitemap
+                %span.nav-label Settings
+      #page-wrapper.gray-bg.dashbard-1
+        .row.border-bottom
+          %nav.navbar.navbar-static-top{:role => "navigation", :style => "margin-bottom: 0"}
+            %ul.nav.navbar-top-links.navbar-right
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  %i.fa.fa-sign-out>
+                    Logout
+        .row.border-bottom.white-bg.dashboard-header
+          .col-sm-12
+            = yield
+        .row
+          .col-lg-12
+            .wrapper.wrapper-content
+          .footer
+            %div
+              %strong Copyright
+              Simplenote © 2014-2015
+
+

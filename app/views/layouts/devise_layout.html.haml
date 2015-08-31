@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title SuperMailer
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    #wrapper
+      .middle-box.text-center.loginscreen.animated.fadeInDown
+        = yield
+        %p.m-t
+          %small Inspinia we app framework base on Bootstrap 3  2014

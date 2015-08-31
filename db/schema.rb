@@ -17,10 +17,12 @@ ActiveRecord::Schema.define(version: 20150830085733) do
   enable_extension "plpgsql"
 
   create_table "letters", force: :cascade do |t|
-    t.string   "title"
-    t.string   "body"
-    t.datetime "sended_at"
-    t.text     "recipients",          default: [],              array: true
+    t.string   "subject"
+    t.text     "body"
+    t.text     "parts",               default: [],              array: true
+    t.datetime "date"
+    t.text     "from",                default: [],              array: true
+    t.text     "to",                  default: [],              array: true
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "user_id"

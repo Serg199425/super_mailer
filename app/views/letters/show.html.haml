@@ -1,0 +1,4 @@
+-# coding: utf-8
+%h1= @letter.subject
+%p= @letter.from.last
+= html_filter(@letter.body)

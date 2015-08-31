@@ -1,17 +1,32 @@
 .centered { text-align: center; }
 
-.clock-container { font-size: 34px; color: #3071a9; font-weight: bold; }
-
 .left { float: left;}
 
-.devise-container { border: 1px solid rgba(0,0,0,.2); padding: 15px; border-radius: 8px; border-color: #ddd; background-color: #fdfdfd; }
+.loginscreen.middle-box {
+  margin-top: 10%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #2F4056;
+}
 
-.devise-container label:not([for=user_remember_me]) { display: none; }
+.loginscreen input[type=password], .loginscreen input[type=email] { 
+  border: none; 
+  border-radius: 3px; 
+  background-color: whitesmoke; 
+  width: 80%;
+  padding: 5px 10px;
+}
 
-.devise-container input[type=password], .devise-container input[type=email] { margin: 5% 10% 0 10%; width: 80%; }
+span.main-logo {
+  font-size: 45px;
+  color: whitesmoke;
+}
 
-.devise-container input[type=submit] { margin-left: 69%; margin-bottom: 20px; }
+#side-menu .nav-header {
+  padding: 50px 0;
+  text-align: center;
+}
 
-body.devise { margin-top: 200px; }
-
-.devise-container .remember-me { margin: 10px 0 0px 58%;}
+.menu-active { background-color: #1cc09f; }
+.menu-active span, .menu-active i { color: white; }
+.menu-active:hover { background-color: #17987e; }

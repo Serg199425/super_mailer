@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 20150831171716) do
     t.string   "login"
     t.string   "password"
     t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.boolean  "copy_old_emails"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "copy_old_letters", default: true
   end
 
   create_table "users", force: :cascade do |t|

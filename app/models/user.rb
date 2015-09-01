@@ -7,4 +7,9 @@ class User < ActiveRecord::Base
   has_many :provider_accounts
   has_many :letters
 
+  after_create :create_attachments_folder
+
+  def create_attachments_folder
+    FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{self.id}/")
+  end
 end

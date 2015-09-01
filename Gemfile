@@ -66,3 +66,17 @@ gem 'will_paginate-bootstrap'
 gem 'activerecord-import'
 
 gem 'nokogiri'
+
+gem 'bootsy'
+
+gem "mini_magick"
+
+gem 'bootstrap-tagsinput-rails'
+
+gem 'sidekiq'
+
+gem 'sidekiq-status'
+
+gem 'websocket-rails'
+
+gem 'redis'

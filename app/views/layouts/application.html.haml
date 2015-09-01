@@ -14,21 +14,21 @@
               .dropdown.profile-element
                 %span.main-logo
                   SMailer
-            %li{ class: is_active?("index") }
-              = link_to letters_index_path do
+            %li{ class: is_active?("inbox") }
+              = link_to letters_inbox_path do
                 %i.fa.fa-envelope
                 %span.nav-label Inbox
-            %li
-              %a#shared_notes_button{:href => ""}
+            %li{ class: is_active?("outbox") }
+              = link_to letters_outbox_path do
                 %i.fa.fa-globe
-                %span.nav-label Sent
+                %span.nav-label Outbox
             %li
               %a{:href => ""}
                 %i.fa.fa-star
                 %span.nav-label Spam
             %li
               %a#groups_button{:href => ""}
-                %i.fa.fa-th-large
+                %i.fa.fa-trash
                 %span.nav-label Trash
             %li
               %a#friends_button{:href => ""}
@@ -42,6 +42,11 @@
                 = link_to destroy_user_session_path, method: :delete do
                   %i.fa.fa-sign-out>
                     Logout
+            %ul.nav.navbar-top-links.navbar-left
+              %li
+                = link_to letter_create_path, class: 'btn btn-middle' do
+                  %i.fa.fa-pencil>
+                    New Message
         .row.border-bottom.white-bg.dashboard-header
           .col-sm-12
             = yield
@@ -51,6 +56,6 @@
           .footer
             %div
               %strong Copyright
-              Simplenote © 2014-2015
+              SMailer © 2014-2015
 
 

@@ -1,0 +1,6 @@
+%div.page-header
+  %h1.left Your Mails
+  = link_to letters_refresh_path, class: 'btn btn-middle right refresh-button' do
+    %i.fa.fa-pencil>
+      Refresh
+= render partial: 'mails_list'

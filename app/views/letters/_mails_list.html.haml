@@ -1,0 +1,13 @@
+%table.table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+  %tbody
+    - @letters.each do |letter|
+      %tr
+        %td= letter.subject
+        %td= letter.from
+        %td= link_to 'Show', letter_show_path(letter)
+= will_paginate @collection, renderer: BootstrapPagination::Rails

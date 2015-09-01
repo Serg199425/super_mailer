@@ -1,0 +1,9 @@
+%h1 New Mail
+.providers-errors
+= simple_form_for @letter, url: letter_create_path, remote: false do |f|
+  = f.input :subject, label: false, placeholder: 'Subject'
+  = f.collection_select(:provider_account_id, current_user.provider_accounts.order('name'), :id, :name, { :prompt => 'Select Provider' } )
+  = f.input :to, label: false
+  = f.bootsy_area :body
+  %br
+  = f.submit 'Send'

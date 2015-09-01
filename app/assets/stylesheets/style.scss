@@ -1,6 +1,8 @@
 .centered { text-align: center; }
 
-.left { float: left;}
+.left { float: left; }
+
+.right { float: right; }
 
 .loginscreen.middle-box {
   margin-top: 10%;
@@ -27,6 +29,15 @@ span.main-logo {
   text-align: center;
 }
 
-.menu-active { background-color: #1cc09f; }
-.menu-active span, .menu-active i { color: white; }
-.menu-active:hover { background-color: #17987e; }
+.menu-active, .btn-middle { background-color: #1cc09f; }
+.menu-active span, .menu-active i, .btn-middle span, .btn-middle i { color: white; }
+.menu-active:hover, .btn-middle:hover { background-color: #17987e !important; }
+
+.refresh-button { padding: 5px 10px !important;}
+.btn-middle { margin: 10px; padding: 10px 10px !important; line-height: 28px; }
+
+.wysihtml5-sandbox { width: 70% !important; height: 400px !important; }
+
+.page-header { overflow: auto; border: none; }
+
+.table { width: 100% !important; }

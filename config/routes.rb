@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   devise_for :users
-  root 'letters#index', as: :letters_index
+  root 'letters#inbox', as: :letters_inbox
+
+  get 'letters/outbox', to: 'letters#outbox', as: :letters_outbox
+  get 'letters/create', to: 'letters#create', as: :letter_create
+  post 'letters/create', to: 'letters#create'
+  get 'letters/show/:id', to: 'letters#show', as: :letter_show
+  get 'letters/refresh', to: 'letters#refresh', as: :letters_refresh
+
 
   get 'providers/index', to: 'providers#index', as: :providers_index
   get 'providers/create', to: 'providers#create', as: :provider_create
@@ -8,7 +16,6 @@ Rails.application.routes.draw do
   get 'providers/edit/:id', to: 'providers#edit', as: :provider_edit
   patch 'providers/edit/:id', to: 'providers#edit'
 
-  get 'letters/show/:id', to: 'letters#show', as: :letter_show
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

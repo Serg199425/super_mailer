@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830085733) do
+ActiveRecord::Schema.define(version: 20150831171716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,15 @@ ActiveRecord::Schema.define(version: 20150830085733) do
   create_table "letters", force: :cascade do |t|
     t.string   "subject"
     t.text     "body"
-    t.text     "parts",               default: [],              array: true
+    t.text     "parts"
     t.datetime "date"
-    t.text     "from",                default: [],              array: true
-    t.text     "to",                  default: [],              array: true
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.string   "from"
+    t.text     "to",                  default: [],                   array: true
+    t.string   "group",               default: "inbox"
+    t.string   "message_id"
+    t.text     "attachments",         default: [],                   array: true
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "user_id"
     t.integer  "provider_account_id"
   end
@@ -38,8 +41,9 @@ ActiveRecord::Schema.define(version: 20150830085733) do
     t.string   "login"
     t.string   "password"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.boolean  "copy_old_emails"
   end
 
   create_table "users", force: :cascade do |t|

@@ -12,6 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootsy
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require bootstrap-tagsinput
 //= require_tree .
+//= require websocket_rails/main
+

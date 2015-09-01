@@ -3,6 +3,7 @@ class ProviderAccount < ActiveRecord::Base
   extend Enumerize
 
   belongs_to :user
+  has_many :letters
 
   validates :login, :password, :name, :address, :protocol, :port, presence: true
 

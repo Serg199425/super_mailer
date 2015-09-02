@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   get 'letters/show/:id', to: 'letters#show', as: :letter_show
   get 'letters/refresh', to: 'letters#refresh', as: :letters_refresh
 
-
   get 'providers/index', to: 'providers#index', as: :providers_index
   get 'providers/create', to: 'providers#create', as: :provider_create
   post 'providers/create', to: 'providers#create'

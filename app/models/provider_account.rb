@@ -8,10 +8,20 @@ class ProviderAccount < ActiveRecord::Base
   validates :login, :password, :name, :address, :protocol, :port, presence: true
 
   enumerize :protocol, in: [:pop3, :imap]
+  enumerize :status, in: [:updating, :ready]
 
   after_save :copying_letters
 
   def copying_letters
     LettersUpdateWorker.perform_async(self.id, 'get_all') if self.copy_old_letters && self.copy_old_letters_changed?
+  end
+
+  def ready?
+    self.status == :ready
+  end
+
+  def last_date
+    last_letter = self.letters.where(group: :inbox).order('date asc').last
+    last_date = last_letter ? last_letter.date : !self.copy_old_letters ? self.created_at : nil
   end
 end

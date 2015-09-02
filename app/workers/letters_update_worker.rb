@@ -1,11 +1,12 @@
 class LettersUpdateWorker
   include Sidekiq::Worker
-  sidekiq_options :retry => false
+  sidekiq_options :retry => false, :backtrace => false
   require 'net/pop'
 
   def perform(provider_account_id, operation = 'update')
+
     @provider_account = ProviderAccount.find(provider_account_id)
-    return if @provider_account.nil?
+    return if @provider_account.nil? || @provider_account.ready?
 
     puts operation.to_s + " for user #{@provider_account.user.id}"
 
@@ -19,33 +20,41 @@ class LettersUpdateWorker
     Mail.defaults { retriever_method  protocol, options }
 
     get_mails(operation)
-    return if @mails.blank?
-
-    letters = @mails.map do |mail|
-      new_letter = Letter.new(subject: mail.subject, parts: mail.parts.to_a, date: mail.date, to: mail.to, 
-        from: mail.from.first, user: @provider_account.user, provider_account: @provider_account, body: mail.body.decoded, 
-        message_id: mail.message_id, attachments: [])
+    if @mails.blank?
+      @provider_account.update(status: :ready)
+      WebsocketRails.users[@provider_account.user.id].send_message('updated', { letters_count: 0 }, :namespace => 'letters')
+      return
     end
 
-    Letter.import letters
+    letters = @mails.map do |mail|
+      [mail.subject, [], mail.date, mail.to, mail.from.first, @provider_account.user.id, 
+        @provider_account.id, encode(mail.body.decoded), mail.message_id, attachments(mail)]
+    end
 
-    rescue Net::POPAuthenticationError, ActiveRecord::RecordNotFound => e
-      puts "#{operation.to_s} error: #{e.message}"
+    columns = [:subject, :parts, :date, :to, :from, :user_id, :provider_account_id, :body, :message_id, :attachments]
+
+    Letter.import columns, letters
+
+    @provider_account.update(status: :ready)
+
+    WebsocketRails.users[@provider_account.user.id].send_message('updated', { letters_count: letters.count }, :namespace => 'letters')
+
+    rescue => e
+      message = "#{operation.to_s} error: #{e.message}"
+      puts message
+      @provider_account.update(status: :ready)
+      WebsocketRails.users[@provider_account.user.id].send_message('updated', { error: true }, :namespace => 'letters')
   end
-
-  private
 
   def get_mails(operation)
     operation == 'update' ? update_mails : (get_all_mails if operation == 'get_all')
   end
 
   def update_mails
-    last_letter = @provider_account.letters.where(group: :inbox).order('date asc').last
-    last_date = last_letter ? last_letter.date : !@provider_account.copy_old_letters ? @provider_account.created_at : nil
     (LETTERS_FOR_UPDATE_QUERY..LETTERS_FOR_UPDATE_LIMIT).step(LETTERS_FOR_UPDATE_QUERY) do |letters_count|
       @mails = Mail.find(:what => :last, :count => letters_count, :order => :asc)
-      @mails.reject! {|mail| mail.date <= last_date } if last_date
-      break if letters_count != @mails
+      @mails.reject! {|mail| mail.date <= @provider_account.last_date } if @provider_account.last_date
+      break if letters_count != @mails.count
     end
   end
 
@@ -63,5 +72,9 @@ class LettersUpdateWorker
         File.open(dir[0] + attachment.filename , 'wb') { |file| file << attachment.decoded }
         attachment.filename
       end
-  end 
+  end
+
+  def encode(string)
+    string.force_encoding('iso8859-1').encode('utf-8')
+  end
 end

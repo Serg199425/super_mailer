@@ -1,6 +1,14 @@
 %div.page-header
   %h1.left Your Mails
-  = link_to letters_refresh_path, class: 'btn btn-middle right refresh-button' do
+  = link_to 'javascript:refresh_letters()', class: 'btn btn-middle right refresh-button', id: 'refresh-button' do
     %i.fa.fa-pencil>
       Refresh
-= render partial: 'mails_list'
+.letters-info
+  - if current_user.letters_updating?
+    .centered.ajax-loader
+      %img{alt: "Ajax loader", src: "/assets/ajax-loader.gif"}
+      %span Updating
+.letters-container
+  = render partial: 'letters_list'
+
+= javascript_include_tag "letters_websockets"

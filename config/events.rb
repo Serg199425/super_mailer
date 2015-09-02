@@ -11,9 +11,8 @@ WebsocketRails::EventMap.describe do
   #     subscribe :new, :to => ProductController, :with_method => :new_product
   #   end
   # The above will handle an event triggered on the client like `product.new`.
-  private_channel :letters_updating
-
-  namespace :websocket_rails do
-    subscribe :authorize_peer_message, :to => AuthorizationController, :with_method => :authorize_peer_message
+  namespace :letters do
+    subscribe :subscribe_private, :to => AuthorizationController, :with_method => :authorize_channels
+    # subscribe :authorize_peer_message, :to => AuthorizationController, :with_method => :authorize_message
   end
 end

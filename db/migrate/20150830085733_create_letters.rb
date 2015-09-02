@@ -3,7 +3,7 @@ class CreateLetters < ActiveRecord::Migration
     create_table :letters do |t|
       t.string :subject
       t.text :body
-      t.text :parts
+      t.text :parts, array: true, default: []
       t.datetime :date
       t.string :from
       t.text :to, array: true, default: []

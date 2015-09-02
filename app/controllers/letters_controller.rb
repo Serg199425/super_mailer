@@ -1,9 +1,14 @@
 class LettersController < ApplicationController
   before_action :authenticate_user!
   before_action :check_providers_accounts
+  before_action :set_letters_urls
 
   def inbox
     @letters = Letter.where(group: :inbox).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def outbox
@@ -27,19 +32,29 @@ class LettersController < ApplicationController
   end
 
   def refresh
-    current_user.provider_accounts.each { |provider_account| update_letters(provider_account.id) }
-    redirect_to action: :inbox
+    respond_to do |format|
+      format.js {
+        current_user.provider_accounts.each { |provider_account| update_letters(provider_account) } 
+      }
+    end
   end
 
   private
 
+  def set_letters_urls
+    gon.letters_inbox_path = letters_inbox_path
+    gon.letters_refresh_path = letters_refresh_path
+  end
   def check_providers_accounts
     redirect_to action: 'create', controller: 'providers' if current_user.provider_accounts.blank?
   end
 
   
-  def update_letters(provider_account_id)
-    LettersUpdateWorker.perform_async(provider_account_id)
+  def update_letters(provider_account)
+    if provider_account.status == :ready
+      provider_account.update(status: :updating)
+      LettersUpdateWorker.perform_async(provider_account.id)
+    end
   end
 
   def provider_account_params

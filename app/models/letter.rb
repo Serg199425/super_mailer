@@ -7,8 +7,6 @@ class Letter < ActiveRecord::Base
 
   enumerize :group, in: [:inbox, :outbox, :draft]
 
-  serialize :parts
-
   def deliver
     return unless self.valid?
 

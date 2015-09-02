@@ -80,3 +80,5 @@ gem 'sidekiq-status'
 gem 'websocket-rails'
 
 gem 'redis'
+
+gem 'gon'

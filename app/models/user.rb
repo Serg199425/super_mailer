@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
   def create_attachments_folder
     FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{self.id}/")
   end
+
+  def letters_updating?
+    self.provider_accounts.where(status: :updating).present?
+  end
 end

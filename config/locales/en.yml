@@ -26,6 +26,7 @@ en:
       protocol:
         pop3: "POP3"
         imap: "IMAP"
+        smtp: "SMTP"
       status:
         ready: "Ready!"
-        updating: "updating.."
+        updating: "Updating.."

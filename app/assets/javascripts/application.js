@@ -15,6 +15,6 @@
 //= require bootsy
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require bootstrap-tagsinput
+//= require jquery.tagsinput
 //= require websocket_rails/main
 

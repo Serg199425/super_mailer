@@ -4,7 +4,7 @@ class LettersController < ApplicationController
   before_action :set_letters_urls
 
   def inbox
-    @letters = Letter.where(group: :inbox).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
+    @letters = letters_with_group :inbox
     respond_to do |format|
       format.html
       format.js
@@ -12,29 +12,42 @@ class LettersController < ApplicationController
   end
 
   def outbox
-    @letters = Letter.where(group: :outbox).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
+    @letters = letters_with_group :outbox
+  end
+
+  def trash
+    @letters = letters_with_group :trash
   end
 
   def show
-    @letter = Letter.find(params[:id])
+    @letter = current_user.letters.find(params[:id])
+  end
+
+  def to_trash
+    current_user.letters.find(params[:id]).update(group: :trash)
+    redirect_to :back
+  end
+
+  def destroy
+    current_user.letters.find(params[:id]).destroy
+    redirect_to :back
   end
 
   def create
-    @letter = Letter.new provider_account_params
+    @letter = Letter.new letter_params
     if request.post?
-      @letter.user = current_user
-      @letter.from = current_user.email
       @letter.to = params[:letter][:to].split(',')
-      @letter.group = :draft
-      @letter.date = Time.now
-      @letter.deliver if @letter.save
+      if @letter.save
+        @letter.deliver
+        redirect_to action: :outbox
+      end
     end
   end
 
   def refresh
     respond_to do |format|
       format.js {
-        current_user.provider_accounts.each { |provider_account| update_letters(provider_account) } 
+        current_user.provider_accounts.with_protocol(:imap, :pop3).each { |provider_account| update_letters(provider_account) } 
       }
     end
   end
@@ -57,8 +70,12 @@ class LettersController < ApplicationController
     end
   end
 
-  def provider_account_params
+  def letter_params
     params.require(:letter)
       .permit(:subject, :provider_account_id, :body) if params[:letter]
+  end
+
+  def letters_with_group(group)
+    current_user.letters.with_group(group).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
   end
 end

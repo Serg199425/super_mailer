@@ -12,7 +12,7 @@
           %td= letter.subject
           %td= letter.from
           %td= link_to 'Show', letter_show_path(letter)
-          %td= link_to 'To Trash', letter_to_trash_path(letter), method: :delete
+          %td= link_to 'Delete', letter_destroy_path(letter), method: :delete
   = will_paginate @collection, renderer: BootstrapPagination::Rails
 - else
   %p.alert.alert-info.empty.centered Empty

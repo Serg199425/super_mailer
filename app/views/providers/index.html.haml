@@ -1,10 +1,16 @@
-%h1 Your email accounts
+%div.page-header
+  %h1.left Your Providers
+  = link_to provider_create_path,class: 'btn btn-middle right refresh-button', id: 'refresh-button' do
+    %i.fa.fa-pencil>
+      Add New
 %table.table
   %thead
     %tr
-      %th
-      %th
-      %th
+      %th Name
+      %th Address
+      %th Protocol
+      %th Status
+      %th 
   %tbody
     - @providers_accounts.each do |provider_account|
       %tr
@@ -13,4 +19,5 @@
         %td= provider_account.protocol.text
         %td= provider_account.status.text
         %td= link_to 'Edit', provider_edit_path(provider_account)
+        %td= link_to 'Delete', provider_destroy_path(provider_account)
   

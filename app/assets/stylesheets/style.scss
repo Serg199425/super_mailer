@@ -31,7 +31,7 @@ span.main-logo {
 
 .menu-active, .btn-middle { background-color: #1cc09f; }
 .menu-active span, .menu-active i, .btn-middle span, .btn-middle i { color: white; }
-.menu-active:hover, .btn-middle:hover { background-color: #17987e !important; }
+.menu-active a:hover, .btn-middle:hover { background-color: #17987e !important; }
 
 .refresh-button { padding: 5px 10px !important;}
 .btn-middle { margin: 10px; padding: 10px 10px !important; line-height: 28px; }
@@ -42,4 +42,15 @@ span.main-logo {
 
 .table { width: 100% !important; }
 
- .ajax-loader span { margin-left: 10px; font-size: 15px; font-weight: bold; }
+.ajax-loader span { margin-left: 10px; font-size: 15px; font-weight: bold; }
+
+.empty { font-size: 18px; }
+
+.alert p { overflow: hidden; text-overflow: ellipsis; }
+.alert { margin-left: 40%; width: 20%; }
+
+.tag { background-color: #1cc09f !important; color: white !important; border: none !important; }
+div.tagsinput span.tag a { color: white !important; }
+.tagsinput { margin: 10px 0; padding: 5px 5px 0 14px !important; }
+#letter_subject { width: 30%; padding: 5px 5px 0 14px; height: 43px; }
+#letter_provider_account_id { width: 30%; margin-top: 10px; }

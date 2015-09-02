@@ -27,12 +27,12 @@
               %a{:href => ""}
                 %i.fa.fa-star
                 %span.nav-label Spam
-            %li
+            %li{ class: is_active?("index") }
               = link_to providers_index_path do
                 %i.fa.fa-star
                 %span.nav-label Providers
-            %li
-              %a#groups_button{:href => ""}
+            %li{ class: is_active?("trash") }
+              = link_to letters_trash_path do
                 %i.fa.fa-trash
                 %span.nav-label Trash
             %li

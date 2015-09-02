@@ -20,6 +20,11 @@ class ProvidersController < ApplicationController
     end
   end
 
+  def destroy
+    current_user.provider_accounts.find(params[:id]).destroy
+    redirect_to :back
+  end
+
   private
 
   def provider_account_params

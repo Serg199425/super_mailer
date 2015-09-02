@@ -7,8 +7,8 @@ class ProviderAccount < ActiveRecord::Base
 
   validates :login, :password, :name, :address, :protocol, :port, presence: true
 
-  enumerize :protocol, in: [:pop3, :imap]
-  enumerize :status, in: [:updating, :ready]
+  enumerize :protocol, in: [:pop3, :imap, :smtp], scope: true
+  enumerize :status, in: [:updating, :ready], scope: true
 
   after_save :copying_letters
 
@@ -21,7 +21,7 @@ class ProviderAccount < ActiveRecord::Base
   end
 
   def last_date
-    last_letter = self.letters.where(group: :inbox).order('date asc').last
+    last_letter = self.letters.with_group(:inbox, :trash).order('date asc').last
     last_date = last_letter ? last_letter.date : !self.copy_old_letters ? self.created_at : nil
   end
 end

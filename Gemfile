@@ -71,7 +71,7 @@ gem 'bootsy'
 
 gem "mini_magick"
 
-gem 'bootstrap-tagsinput-rails'
+gem 'tagsinput-rails'
 
 gem 'sidekiq'
 
@@ -82,3 +82,5 @@ gem 'websocket-rails'
 gem 'redis'
 
 gem 'gon'
+
+gem "paperclip", "~> 4.3"

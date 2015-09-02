@@ -14,6 +14,6 @@ class User < ActiveRecord::Base
   end
 
   def letters_updating?
-    self.provider_accounts.where(status: :updating).present?
+    self.provider_accounts.with_status(:updating).present?
   end
 end

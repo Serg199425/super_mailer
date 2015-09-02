@@ -4,16 +4,20 @@ Rails.application.routes.draw do
   root 'letters#inbox', as: :letters_inbox
 
   get 'letters/outbox', to: 'letters#outbox', as: :letters_outbox
+  get 'letters/trash', to: 'letters#trash', as: :letters_trash
   get 'letters/create', to: 'letters#create', as: :letter_create
   post 'letters/create', to: 'letters#create'
   get 'letters/show/:id', to: 'letters#show', as: :letter_show
   get 'letters/refresh', to: 'letters#refresh', as: :letters_refresh
+  delete 'letters/to_trash/:id', to: 'letters#to_trash', as: :letter_to_trash
+  delete 'letters/destroy/:id', to: 'letters#destroy', as: :letter_destroy
 
   get 'providers/index', to: 'providers#index', as: :providers_index
   get 'providers/create', to: 'providers#create', as: :provider_create
   post 'providers/create', to: 'providers#create'
   get 'providers/edit/:id', to: 'providers#edit', as: :provider_edit
   patch 'providers/edit/:id', to: 'providers#edit'
+  delete 'providers/destroy/:id', to: 'providers#destroy', as: :provider_destroy
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

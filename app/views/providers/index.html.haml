@@ -10,5 +10,7 @@
       %tr
         %td= provider_account.name
         %td= provider_account.address
+        %td= provider_account.protocol.text
+        %td= provider_account.status.text
         %td= link_to 'Edit', provider_edit_path(provider_account)
   

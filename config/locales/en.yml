@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+  enumerize:
+    provider_account:
+      protocol:
+        pop3: "POP3"
+        imap: "IMAP"
+      status:
+        ready: "Ready!"
+        updating: "updating.."

@@ -7,6 +7,7 @@ Requirements:
   - Rails Websockets
   - Sidekiq
   - PostgreSQL
+  - ImageMagick or GraphicsMagick (for markdown redactor);
   
   
 To start this you must:

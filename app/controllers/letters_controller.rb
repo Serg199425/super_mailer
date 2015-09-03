@@ -72,7 +72,7 @@ class LettersController < ApplicationController
 
   def letter_params
     params.require(:letter)
-      .permit(:subject, :provider_account_id, :body) if params[:letter]
+      .permit(:subject, :provider_account_id, :body, attachments_attributes: [:id, :file]) if params[:letter]
   end
 
   def letters_with_group(group)

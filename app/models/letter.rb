@@ -2,8 +2,12 @@ class Letter < ActiveRecord::Base
   extend Enumerize
   belongs_to :user
   belongs_to :provider_account
+  has_many :attachments, :dependent => :destroy
 
-  validates :body, :to, :from, :subject, :provider_account, :date, presence: true
+  validates_associated :attachments
+  accepts_nested_attributes_for :attachments
+
+  validates :body, :to, :subject, :provider_account, :date, :user, :from, :group, presence: true
 
   enumerize :group, in: [:inbox, :outbox, :draft, :trash], scope: true
 
@@ -30,6 +34,7 @@ class Letter < ActiveRecord::Base
   end
 
   def fill_columns
+    self.user = self.provider_account.user if self.provider_account
     self.from = self.provider_account.login if self.provider_account
     self.group = :draft
     self.date = Time.now

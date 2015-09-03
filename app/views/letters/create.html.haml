@@ -1,13 +1,28 @@
 %h1 New Mail
 .providers-errors
   = errors_full_messages(@letter)
-= simple_form_for @letter, url: letter_create_path do |f|
+= simple_form_for @letter, url: letter_create_path, html: { multipart: true } do |f|
   = f.input :subject, label: false, placeholder: 'Subject'
+
   = f.collection_select :provider_account_id, current_user.provider_accounts.with_protocol(:smtp).order('name'), 
     :id, :name, { :prompt => 'Select Provider', class: 'form-cont' }, {class: "form-control"}
-  = f.input :to, label: false, input_html: { value: @letter.to.present? ? @letter.to.join(',') : '' } 
+
+  = f.input :to, label: false, input_html: { value: @letter.to.present? ? @letter.to.join(',') : '', placeholder: 'to' }
+
   = f.bootsy_area :body
   %br
   = f.submit 'Send', class: 'btn btn-default'
+
+  %h2 Attachments
+  .attachments-container
+    = f.simple_fields_for :attachments do |a|
+      = a.input :file, as: :file, label: false
+
+  = link_to 'javascript:add_attachment()', class: 'btn btn-default', id: 'add-attachment-button' do
+    %i.fa.fa-pencil>
+      Add
+  = link_to 'javascript:remove_attachment()', class: 'btn btn-default', id: 'remove-attachment-button' do
+    %i.fa.fa-pencil>
+      Remove
 
 = javascript_include_tag "letter_create"

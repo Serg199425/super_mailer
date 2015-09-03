@@ -1,3 +1,7 @@
+if ('<%= current_user.recieve_providers_empty?%>' == 'true') {
+  $('.letters-info').html('<div class="centered ajax-loader">' +
+  '<img alt="Ajax loader" src="/assets/ajax-loader.gif"><span><%= t "errors.recieve_providers_empty" %></span></div>');
+}
 if ($('.empty'))
   $('.empty').remove();
 $('.letters-info').html('<div class="centered ajax-loader">' +

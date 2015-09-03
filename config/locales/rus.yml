@@ -53,3 +53,6 @@ rus:
   locales:
     rus: 'Русский'
     en: 'English'
+  errors:
+    recieve_providers_empty: "У Вас не аккаунта для получения писем"
+    send_providers_empty: "У вас нет аккаунта для отравки сообщения"

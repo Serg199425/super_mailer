@@ -74,3 +74,6 @@ en:
   locales:
     rus: 'Русский'
     en: 'English'
+  errors:
+    recieve_providers_empty: "Recieve providers is empty"
+    send_providers_empty: "Send providers is empty"

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   post 'providers/create', to: 'providers#create'
   get 'providers/edit/:id', to: 'providers#edit', as: :provider_edit
   patch 'providers/edit/:id', to: 'providers#edit'
-  delete 'providers/destroy/:id', to: 'providers#destroy', as: :provider_destroy
+  get 'providers/destroy/:id', to: 'providers#destroy', as: :provider_destroy
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

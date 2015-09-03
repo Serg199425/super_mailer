@@ -20,4 +20,12 @@ class User < ActiveRecord::Base
   def letters_updating?
     self.provider_accounts.with_status(:updating).present?
   end
+
+  def recieve_providers_empty?
+    self.provider_accounts.with_protocol(:imap, :pop3).blank?
+  end
+
+  def send_providers_empty?
+    self.provider_accounts.with_protocol(:smtp).blank?
+  end
 end

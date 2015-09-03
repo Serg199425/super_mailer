@@ -9,10 +9,10 @@
         = f.input :name, label: false, input_html: { placeholder: t('fields.name') }
         = f.input :address, label: false, input_html: { placeholder: t('fields.address') }
         = f.input :protocol,  label: false, prompt: t('fields.protocol')
-        = f.input :port,  label: false, input_html: { placeholder: t('fields.name') }
+        = f.input :port,  label: false, input_html: { placeholder: t('fields.port') }
         = f.input :enable_ssl, inline_label: t('fields.enable_ssl'), label: false, input_html: { class: 'checkbox' }
-        = f.input :login,  label: false, placeholder: t('fields.login'), input_html: { placeholder: 'login' }
-        = f.input :password,  label: false, placeholder: t('fields.password'), input_html: { placeholder: 'Password' }
+        = f.input :login,  label: false, input_html: { placeholder: t('fields.login') }
+        = f.input :password,  label: false, input_html: { placeholder: t('fields.password') }
       .form-group.copy-old-letters
         - if @provider_account.protocol != :smtp
           = f.input :copy_old_letters, inline_label: t('fields.copy_old_letters'), label: false, input_html: { class: 'checkbox' }

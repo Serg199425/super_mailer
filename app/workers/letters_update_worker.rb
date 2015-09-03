@@ -11,7 +11,7 @@ class LettersUpdateWorker
     puts operation.to_s + " for user #{@provider_account.user.id}"
 
     options = { :address    => @provider_account.address, :port => @provider_account.port,
-                :user_name  => @provider_account.login, :password   => @provider_account.password,
+                :user_name  => @provider_account.login, :password   => @provider_account.decrypt_password,
                 :enable_ssl => @provider_account.enable_ssl
               }
 
@@ -71,17 +71,19 @@ class LettersUpdateWorker
   end
 
   def attachments(mail, letter_id)
-      return [] if mail.attachments.blank?
-      user_id = @provider_account.user.id
-      dir = FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{user_id}/message_id_#{mail.message_id}/")
-      mail.attachments.map do |attachment|
-        new_attachment = Attachment.new letter_id: letter_id
-        File.open(dir[0] + attachment.filename , 'wb') do |file| 
-          file << attachment.decoded
-          new_attachment.file = file
-        end
-        @attachments << new_attachment
+    return [] if mail.attachments.blank?
+    user_id = @provider_account.user.id
+    dir = File.dirname("#{Rails.root}/public/attachments/user_#{user_id}/file")
+    FileUtils.mkdir_p(dir) unless File.directory?(dir)
+    dir = FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{user_id}/message_id_#{mail.message_id}/")
+    mail.attachments.map do |attachment|
+      new_attachment = Attachment.new letter_id: letter_id
+      File.open(dir[0] + attachment.filename , 'wb') do |file| 
+        file << attachment.decoded
+        new_attachment.file = file
       end
+      @attachments << new_attachment
+    end
   end
 
   def text_part(mail)

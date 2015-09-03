@@ -11,13 +11,14 @@ class Letter < ActiveRecord::Base
   enumerize :group, in: [:inbox, :outbox, :draft, :trash], scope: true
 
   before_validation :fill_columns, on: [:create]
+  before_destroy :delete_attachments
 
   def deliver
     return unless self.valid?
     provider_account = self.provider_account
     Mail.defaults do
       delivery_method :smtp, address: provider_account.address, port: 465, tls: true,
-                      user_name: provider_account.login, password: provider_account.password 
+                      user_name: provider_account.login, password: provider_account.decrypt_password 
     end
 
     mail = Mail.new(from: self.from, to: self.to, subject: self.subject )
@@ -40,5 +41,10 @@ class Letter < ActiveRecord::Base
     self.from = self.provider_account.login if self.provider_account
     self.group = :draft
     self.date = Time.now
+  end
+
+  def delete_attachments
+    return if self.attachments.blank?
+    FileUtils.rm_rf(Dir.glob("#{Rails.root}/public/attachments/user_#{self.user_id}/message_id_#{self.message_id}/")) if self.message_id
   end
 end

@@ -1,0 +1,20 @@
+- if @letters.present?
+  %table.table
+    %thead
+      %tr
+        %th
+        %th
+        %th
+        %th
+        %th
+    %tbody
+      - @letters.each do |letter|
+        %tr
+          %td= letter.subject
+          %td= letter.from
+          %td= link_to 'Show', letter_show_path(letter)
+          %td= link_to 'Edit', letter_edit_path(letter)
+          %td= link_to 'Delete', letter_destroy_path(letter), method: :delete
+  = will_paginate @collection, renderer: BootstrapPagination::Rails
+- else
+  %p.alert.alert-info.empty.centered Empty

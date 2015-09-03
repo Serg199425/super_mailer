@@ -1,7 +1,7 @@
 %div.page-header
   %h1.left Your Mails
   = link_to 'javascript:refresh_letters()', class: 'btn btn-middle right refresh-button', id: 'refresh-button' do
-    %i.fa.fa-pencil>
+    %i.fa.fa-refresh>
       Refresh
 .letters-info
   - if current_user.letters_updating?

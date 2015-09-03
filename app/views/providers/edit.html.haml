@@ -1,16 +1,21 @@
 .row
   .col-lg-4
   .col-lg-4{:style => "margin-top: 50px"}
-    %h1 Add Proviver Account
-    .providers-errors
-    = simple_form_for @provider_account, url: provider_edit_path, remote: false do |f|
-      = f.input :name
-      = f.input :address
-      = f.input :protocol
-      = f.input :port
-      = f.input :enable_ssl, inline_label: 'Enable SSL'
+    %h1 Edit Proviver Account
+    .providers-errors-container
+      = errors_full_messages(@provider_account)
+    = simple_form_for @provider_account, url: provider_edit_path, defaults: { input_html: { class: 'form-control' }} do |f|
+      .form-group
+        = f.input :name, label: false, input_html: { placeholder: 'Name' }
+        = f.input :address, label: false, input_html: { placeholder: 'Address' }
+        = f.input :protocol,  label: false, input_html: { placeholder: 'Protocol' }
+        = f.input :port,  label: false, placeholder: 'Name', input_html: { placeholder: 'Port' }
+        = f.input :enable_ssl, inline_label: 'Enable SSL', label: false, input_html: { class: 'checkbox' }
+        = f.input :login,  label: false, placeholder: 'Email', input_html: { placeholder: 'login' }
+        = f.input :password,  label: false, placeholder: 'Password', input_html: { placeholder: 'Password' }
+      .form-group.copy-old-letters
+        - if @provider_account.protocol != :smtp
+          = f.input :copy_old_letters, inline_label: 'Copy old letters', label: false, input_html: { class: 'checkbox' }
+      = f.submit class: 'btn btn-default'
 
-      = f.input :login
-      = f.input :password
-      = f.input :copy_old_letters
-      = f.submit
+= javascript_include_tag "provider_account"

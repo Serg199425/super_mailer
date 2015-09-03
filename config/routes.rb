@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   get 'letters/trash', to: 'letters#trash', as: :letters_trash
   get 'letters/create', to: 'letters#create', as: :letter_create
   post 'letters/create', to: 'letters#create'
+  get 'letters/edit/:id', to: 'letters#edit', as: :letter_edit
+  post 'letters/edit/:id', to: 'letters#edit'
+  get 'letters/deliver/:id', to: 'letters#deliver', as: :letter_deliver
   get 'letters/show/:id', to: 'letters#show', as: :letter_show
   get 'letters/refresh', to: 'letters#refresh', as: :letters_refresh
+  get 'letters/draft', to: 'letters#draft', as: :letters_draft
   delete 'letters/to_trash/:id', to: 'letters#to_trash', as: :letter_to_trash
   delete 'letters/destroy/:id', to: 'letters#destroy', as: :letter_destroy
 

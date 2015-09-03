@@ -15,6 +15,10 @@ class LettersController < ApplicationController
     @letters = letters_with_group :outbox
   end
 
+  def draft
+    @letters = letters_with_group :draft
+  end
+
   def trash
     @letters = letters_with_group :trash
   end
@@ -41,6 +45,19 @@ class LettersController < ApplicationController
     end
   end
 
+  def edit
+    @letter = current_user.letters.with_group(:draft).find(params[:id])
+    if request.post?
+      @letter.to = params[:letter][:to].split(',')
+      @letter.update(letter_params)
+    end
+  end
+
+  def deliver
+    @letter = current_user.letters.with_group(:draft).find(params[:id])
+    redirect_to action: @letter.deliver ? :draft : :edit
+  end
+
   def refresh
     respond_to do |format|
       format.js {
@@ -59,7 +76,6 @@ class LettersController < ApplicationController
     redirect_to action: 'create', controller: 'providers' if current_user.provider_accounts.blank?
   end
 
-  
   def update_letters(provider_account)
     if provider_account.status == :ready
       provider_account.update(status: :updating)

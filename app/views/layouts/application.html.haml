@@ -17,16 +17,20 @@
                   SMailer
             %li{ class: is_active?("inbox") }
               = link_to letters_inbox_path do
-                %i.fa.fa-envelope
+                %i.fa.fa-download
                 %span.nav-label Inbox
             %li{ class: is_active?("outbox") }
               = link_to letters_outbox_path do
-                %i.fa.fa-globe
+                %i.fa.fa-upload
                 %span.nav-label Outbox
             %li{ class: is_active?("index") }
               = link_to providers_index_path do
-                %i.fa.fa-star
-                %span.nav-label Providers
+                %i.fa.fa-user
+                %span.nav-label Provider's Accounts
+            %li{ class: is_active?("draft") }
+              = link_to letters_draft_path do
+                %i.fa.fa-spinner
+                %span.nav-label Draft
             %li{ class: is_active?("trash") }
               = link_to letters_trash_path do
                 %i.fa.fa-trash

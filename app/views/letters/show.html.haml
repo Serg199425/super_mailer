@@ -1,6 +1,6 @@
 -# coding: utf-8
 %h1= @letter.subject
-%h3= "From: " + @letter.from
+%h3= t('letters.from') + @letter.from
 - if @letter.text_part
   .text-part-container= @letter.text_part
 - if @letter.html_part
@@ -8,7 +8,7 @@
 
 
 - if @letter.attachments.present?
-  %h2 Attachments
+  %h2= t('letters.attachments')
   .attachments-container
   - @letter.attachments.each do |attachment|
     %p=link_to attachment.file.original_filename, attachment.file.url

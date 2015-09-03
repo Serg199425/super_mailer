@@ -1,0 +1,55 @@
+rus:
+  enumerize:
+    provider_account:
+      protocol:
+        pop3: "POP3"
+        imap: "IMAP"
+        smtp: "SMTP"
+      status:
+        ready: "Готово!"
+        updating: "Обновляется.."
+  layout:
+    inbox: Входящие
+    outbox: Исходящие
+    provider_account: Почтовые аккаунты
+    draft: Черновики
+    trash: Корзина
+    new_mail: Написать
+    logout: Выйти
+    copyright: Copyright SMailer © 2015
+  letters:
+    inbox_header: Входящие
+    outbox_header: Исходящие
+    draft_header: Черновики
+    trash_header: Корзина
+    from: "От: "
+    attachments: Приложения
+  providers:
+    create_header: Добавить Почтовый Аккаунт
+    edit_header: Редактировать Почтовый Аккаунт
+    index: Почтовые аккаунты
+  actions:
+    refresh: Обновить
+    delete: Удалить
+    edit: Редактировать
+    to_trash: В корзину
+    show: Открыть
+    send: Отправить
+    remove: Убрать
+    add: Добавить
+    save: Сохранить
+    updating: Обновляется..
+    change_locale: Язык
+  fields:
+    name: Имя
+    protocol: Выберите протокол
+    address: Адрес
+    port: Порт
+    copy_old_letters: Скопировать старые
+    enable_ssl: Включить SSL
+    login: Логин
+    password: Пароль
+    status: Статус
+  locales:
+    rus: 'Русский'
+    en: 'English'

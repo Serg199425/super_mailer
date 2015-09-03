@@ -1,15 +1,15 @@
 %div.page-header
-  %h1.left Your Providers
+  %h1.left= t('providers.index_header')
   = link_to provider_create_path,class: 'btn btn-middle right refresh-button', id: 'refresh-button' do
     %i.fa.fa-pencil>
-      Add New
+      = t('actions.add')
 %table.table
   %thead
     %tr
-      %th Name
-      %th Address
-      %th Protocol
-      %th Status
+      %th= t('fields.name')
+      %th= t('fields.address')
+      %th= t('fields.protocol')
+      %th= t('fields.status')
       %th 
   %tbody
     - @providers_accounts.each do |provider_account|

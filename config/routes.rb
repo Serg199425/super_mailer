@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   delete 'letters/to_trash/:id', to: 'letters#to_trash', as: :letter_to_trash
   delete 'letters/destroy/:id', to: 'letters#destroy', as: :letter_destroy
 
+  get 'change_locale/:locale', to: 'locales#change', as: :locale_change 
+
   get 'providers/index', to: 'providers#index', as: :providers_index
   get 'providers/create', to: 'providers#create', as: :provider_create
   post 'providers/create', to: 'providers#create'

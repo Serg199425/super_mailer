@@ -20,7 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
   enumerize:
     provider_account:
       protocol:
@@ -30,3 +29,48 @@ en:
       status:
         ready: "Ready!"
         updating: "Updating.."
+  layout:
+    inbox: Inbox
+    outbox: Outbox
+    provider_account: Provider's accounts
+    draft: Draft
+    trash: Trash
+    new_mail: New Mail
+    logout: Logout
+    copyright: Copyright SMailer © 2015
+  letters:
+    inbox_header: Your Mails
+    outbox_header: Sent Mails
+    draft_header: Draft
+    trash_header: Trash
+    from: "From: "
+    attachments: Attachments
+  providers:
+    create_header: Add Provider Account
+    edit_header: Edit Provider Account
+    index: Your Providers
+  actions:
+    refresh: Refresh
+    delete: Delete
+    edit: Edit
+    to_trash: To Trash
+    show: Show
+    send: Send
+    remove: Remove
+    add: Add
+    save: Save
+    updating: Updating..
+    change_locale: Language
+  fields:
+    name: Name
+    protocol: Select Protocol
+    address: Address
+    port: Port
+    copy_old_letters: Copy old mails
+    enable_ssl: Enable SSL
+    login: Login
+    password: Password
+    status: Status
+  locales:
+    rus: 'Русский'
+    en: 'English'

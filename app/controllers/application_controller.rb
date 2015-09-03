@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   layout :layout_by_resource
+  before_action :set_locale
 
   protected
 
@@ -13,5 +14,10 @@ class ApplicationController < ActionController::Base
     else
       "application"
     end
+  end
+
+  def set_locale
+    I18n.locale = current_user.try(:locale) || I18n.default_locale
+    @locales = [ t('locales.en'), t('locales.rus') ]
   end
 end

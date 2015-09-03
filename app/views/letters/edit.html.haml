@@ -1,5 +1,5 @@
 %h1 Edit Mail
-= link_to 'Send', letter_deliver_path(@letter), class: 'btn btn-default send-button'
+= link_to t('actions.send'), letter_deliver_path(@letter), class: 'btn btn-default send-button'
 .providers-errors
   = errors_full_messages(@letter)
 = simple_form_for @letter, url: letter_edit_path, html: { multipart: true }, method: :post do |f|
@@ -12,7 +12,7 @@
 
   = f.bootsy_area :body
   %br
-  = f.submit 'Save', class: 'btn btn-default'
+  = f.submit t('actions.save'), class: 'btn btn-default'
 
   %h2 Attachments
   .attachments-container
@@ -21,9 +21,9 @@
 
   = link_to 'javascript:add_attachment()', class: 'btn btn-default', id: 'add-attachment-button' do
     %i.fa.fa-plus>
-      Add
+      = t('actions.add')
   = link_to 'javascript:remove_attachment()', class: 'btn btn-default', id: 'remove-attachment-button' do
     %i.fa.fa-minus>
-      Remove
+      = t('actions.remove')
 
 = javascript_include_tag "letter_create"

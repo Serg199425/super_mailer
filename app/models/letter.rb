@@ -4,14 +4,13 @@ class Letter < ActiveRecord::Base
   belongs_to :provider_account
   has_many :attachments, :dependent => :destroy
 
-  validates_associated :attachments
   accepts_nested_attributes_for :attachments
 
-  validates :body, :to, :subject, :provider_account, :date, :user, :from, :group, presence: true
+  validates :to, :subject, :provider_account, :date, :user, :from, :group, presence: true
 
   enumerize :group, in: [:inbox, :outbox, :draft, :trash], scope: true
 
-  before_validation :fill_columns, on: [:create, :update]
+  before_validation :fill_columns, on: [:create]
 
   def deliver
     return unless self.valid?
@@ -29,10 +28,11 @@ class Letter < ActiveRecord::Base
 
     self.attachments.each { |attachment| mail.add_file attachment.file.path }
 
-    if mail.deliver!
-      self.group = :outbox
-      self.date = mail.date
-    end
+    mail.deliver!
+    self.update(group: :outbox, date: mail.date)
+    rescue => e
+      self.errors[:base] << e.message
+      return false
   end
 
   def fill_columns

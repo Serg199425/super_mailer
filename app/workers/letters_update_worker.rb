@@ -26,14 +26,20 @@ class LettersUpdateWorker
       return
     end
 
+    @attachments = []
     letters = @mails.map do |mail|
-      [mail.subject, [], mail.date, mail.to, mail.from.first, @provider_account.user.id, 
-        @provider_account.id, encode(mail.body.decoded), mail.message_id, attachments(mail)]
+      letter = Letter.new(subject: mail.subject, date: mail.date, to: mail.to, 
+        from: mail.from.first, user: @provider_account.user, provider_account: @provider_account, 
+        text_part: text_part(mail), html_part: html_part(mail), message_id: mail.message_id)
     end
 
-    columns = [:subject, :parts, :date, :to, :from, :user_id, :provider_account_id, :body, :message_id, :attachments]
+    Letter.import letters, :validate => false
 
-    Letter.import columns, letters
+    letters.each_with_index do |letter, index|
+      attachments(@mails[index], letter.id)
+    end
+
+    Attachment.import @attachments, :validate => false
 
     @provider_account.update(status: :ready)
 
@@ -51,9 +57,10 @@ class LettersUpdateWorker
   end
 
   def update_mails
+    last_date = @provider_account.last_date
     (LETTERS_FOR_UPDATE_QUERY..LETTERS_FOR_UPDATE_LIMIT).step(LETTERS_FOR_UPDATE_QUERY) do |letters_count|
       @mails = Mail.find(:what => :last, :count => letters_count, :order => :asc)
-      @mails.reject! {|mail| mail.date <= @provider_account.last_date } if @provider_account.last_date
+      @mails.reject! {|mail| mail.date <= last_date } if last_date
       break if letters_count != @mails.count
     end
   end
@@ -63,18 +70,25 @@ class LettersUpdateWorker
     @provider_account.letters.destroy_all
   end
 
-
-  def attachments(mail)
+  def attachments(mail, letter_id)
       return [] if mail.attachments.blank?
       user_id = @provider_account.user.id
-      dir = FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{user_id}/message_id_#{mail.message_id}/") 
-      mail.attachments.map do |attachment| 
-        File.open(dir[0] + attachment.filename , 'wb') { |file| file << attachment.decoded }
-        attachment.filename
+      dir = FileUtils.mkdir("#{Rails.root}/public/attachments/user_#{user_id}/message_id_#{mail.message_id}/")
+      mail.attachments.map do |attachment|
+        new_attachment = Attachment.new letter_id: letter_id
+        File.open(dir[0] + attachment.filename , 'wb') do |file| 
+          file << attachment.decoded
+          new_attachment.file = file
+        end
+        @attachments << new_attachment
       end
   end
 
-  def encode(string)
-    string.force_encoding('iso8859-1').encode('utf-8')
+  def text_part(mail)
+    mail.text_part.decoded if mail.multipart? && mail.text_part
+  end
+
+  def html_part(mail)
+    mail.multipart? ? (mail.html_part.decoded if mail.html_part) : mail.body.decoded
   end
 end

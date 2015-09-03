@@ -23,10 +23,6 @@
               = link_to letters_outbox_path do
                 %i.fa.fa-globe
                 %span.nav-label Outbox
-            %li
-              %a{:href => ""}
-                %i.fa.fa-star
-                %span.nav-label Spam
             %li{ class: is_active?("index") }
               = link_to providers_index_path do
                 %i.fa.fa-star
@@ -35,10 +31,6 @@
               = link_to letters_trash_path do
                 %i.fa.fa-trash
                 %span.nav-label Trash
-            %li
-              %a#friends_button{:href => ""}
-                %i.fa.fa-sitemap
-                %span.nav-label Settings
       #page-wrapper.gray-bg.dashbard-1
         .row.border-bottom
           %nav.navbar.navbar-static-top{:role => "navigation", :style => "margin-bottom: 0"}

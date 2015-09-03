@@ -1,4 +1,14 @@
 -# coding: utf-8
 %h1= @letter.subject
-%p= @letter.from
-= html_filter(@letter.body)
+%h3= "From: " + @letter.from
+- if @letter.text_part
+  .text-part-container= @letter.text_part
+- if @letter.html_part
+  = html_filter(@letter.html_part)
+
+
+- if @letter.attachments.present?
+  %h2 Attachments
+  .attachments-container
+  - @letter.attachments.each do |attachment|
+    %p=link_to attachment.file.original_filename, attachment.file.url

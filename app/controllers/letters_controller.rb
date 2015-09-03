@@ -37,10 +37,7 @@ class LettersController < ApplicationController
     @letter = Letter.new letter_params
     if request.post?
       @letter.to = params[:letter][:to].split(',')
-      if @letter.save
-        @letter.deliver
-        redirect_to action: :outbox
-      end
+      redirect_to action: :outbox if @letter.save && @letter.deliver
     end
   end
 

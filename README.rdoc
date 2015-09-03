@@ -1,28 +1,21 @@
-== README
+This application fetch letters via imap or pop3 server and send mails via smtp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Requirements:
+  - Ruby 2.2.1
+  - Rails 4.2.3
+  - Redis
+  - Rails Websockets
+  - Sidekiq
+  - PostgreSQL
+  
+  
+To start this you must:
+  - install requirements
+  - install gems(bundle install)
+  - create and migrate database
+  - run redis (redis-server)
+  - run websocket server (rake websocket:start)
+  - run sidekiq(sidekiq)
+  - run rails server (rails s)
+  
+To constrain the number of letters received after update change LETTERS_FOR_UPDATE_LIMIT and LETTERS_FOR_UPDATE_QUERY in config/initializers/constant.rb

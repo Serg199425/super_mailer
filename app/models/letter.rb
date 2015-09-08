@@ -4,11 +4,9 @@ class Letter < ActiveRecord::Base
   belongs_to :provider_account
   has_many :attachments, :dependent => :destroy
 
-  accepts_nested_attributes_for :attachments
+  validates :to, :provider_account, :date, :user, :from, :group, presence: true
 
-  validates :to, :subject, :provider_account, :date, :user, :from, :group, presence: true
-
-  enumerize :group, in: [:inbox, :outbox, :draft, :trash], scope: true
+  enumerize :group, in: [:inbox, :outbox, :draft, :trash, :both], scope: true
 
   before_validation :fill_columns, on: [:create]
   before_destroy :delete_attachments
@@ -22,15 +20,12 @@ class Letter < ActiveRecord::Base
     end
 
     mail = Mail.new(from: self.from, to: self.to, subject: self.subject )
-
-    self.message_id = mail.message_id
-
     mail.html_part = Mail::Part.new(content_type: 'text/html; charset=UTF-8', body: self.body)
-
     self.attachments.each { |attachment| mail.add_file attachment.file.path }
 
     mail.deliver!
-    self.update(group: :outbox, date: mail.date)
+
+    self.update(group: :outbox, date: mail.date, message_id: mail.message_id)
     rescue => e
       self.errors[:base] << e.message
       return false

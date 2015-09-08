@@ -6,7 +6,7 @@ class LettersController < ApplicationController
   before_action :check_send_providers_accounts, only: [:outbox, :edit, :deliver]
 
   def inbox
-    @letters = letters_with_group :inbox
+    @letters = letters_with_group [:inbox, :both]
     respond_to do |format|
       format.html
       format.js
@@ -18,7 +18,7 @@ class LettersController < ApplicationController
       redirect_to controller: :providers, action: :create
       return
     end
-    @letters = letters_with_group :outbox
+    @letters = letters_with_group [:outbox, :both]
   end
 
   def draft
@@ -113,7 +113,7 @@ class LettersController < ApplicationController
       .permit(:subject, :provider_account_id, :body, attachments_attributes: [:id, :file]) if params[:letter]
   end
 
-  def letters_with_group(group)
-    current_user.letters.with_group(group).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
+  def letters_with_group(groups)
+    current_user.letters.where(group: groups).order('date desc').paginate(page: params[:page], per_page: LETTERS_PER_PAGE)
   end
 end

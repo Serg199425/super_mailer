@@ -1,8 +1,10 @@
 var dispatcher = new WebSocketRails('localhost:3001/websocket')
 var letters_count
 dispatcher.bind('letters.updated', function(response) {
-  if (response.error)
+  if (response.error == 'true') {
     $('.letters-info').html('<div class="alert alert-danger centered" role="alert">Updating is Failed. Try later</div>');
+    return;
+  }
   letters_count = response.letters_count
   if (letters_count > 0) {
     update_content();

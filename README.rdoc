@@ -18,5 +18,6 @@ To start this you must:
   - run websocket server (rake websocket:start)
   - run sidekiq(sidekiq)
   - run rails server (rails s)
+  - run mailcatcher (mailcatcher)
   
 To constrain the number of letters received after update change LETTERS_FOR_UPDATE_LIMIT and LETTERS_FOR_UPDATE_QUERY in config/initializers/constant.rb
